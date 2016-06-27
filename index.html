@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Rate my Cat</title>
+<style type="text/css">
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+.theme-showcase .navbar .container {
+  width: auto;
+}
+.bottom-buffer { 
+	margin-bottom:20px !important; 
+}
+#newCat{
+	padding: 20px;
+}
+.modal-footer {
+	margin-top: 10px;
+}
+#newComment{
+	padding: 20px;
+}
+
+.catComment:first-child {
+	padding-top: 20px;
+}
+
+.catComment:last-child {
+	border-bottom: none;	
+	padding-bottom: 0px;
+}
+
+.catComment {
+	padding-top: 10px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #bebebe;
+}
+</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Upload a Cat</h4>
+			</div>
+			<!-- Form to add a Cat -->
+			<form id="newCat">
+				<fieldset class="form-group">
+					<label for="formGroupExampleInput">Cat's Name</label>
+					<input type="text" class="form-control cat-name" name="name">
+				</fieldset>
+				<fieldset class="form-group">
+					<label for="formGroupExampleInput2">Description</label>
+					<textarea class="form-control addDescription" name="description"></textarea>
+				</fieldset>
+				<label class="btn btn-primary">
+				Upload a Photo <input id="catImage" type="file" style="display: none;">
+				</label>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+			<!-- End Form to add a Cat -->
+		</div>
+	</div>
+</div>
+<!-- End Modal -->
+<!-- Comments Modal -->
+<div class="modal fade" id="myCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add a Comment</h4>
+			</div>
+			<!-- Form to add a Comment-->
+			<form id="newComment">
+				<fieldset class="form-group">
+					<label for="formGroupExampleInput">Comment</label>
+					<textarea class="form-control addCommentField" name="description"></textarea>
+					<div id="catCommentContainer">
+					</div>
+				</fieldset>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+			<!-- End Form to add a Comment -->
+		</div>
+	</div>
+</div>
+<!-- End Comments Modal -->
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		<span class="sr-only">Toggle navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#">Rate my Cat <sup>&reg;</sup></a>
+	</div>
+	<div id="navbar" class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a id="triggerModal">Upload a Cat</a></li>
+		</ul>
+	</div>
+	<!--/.nav-collapse -->
+</div>
+</nav>
+<div class="container">
+	<!-- Row of columns -->
+	<div class="row cat-container">
+		
+	</div>
+	<hr>
+	<footer>
+	<p>
+		 &copy; 2016 Jen Krepelka
+	</p>
+	</footer>
+</div>
+<!-- /container -->
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB575zqGrFfzWIbf2jidOXME3N5mEmA8Mg",
+    authDomain: "rate-my-cat.firebaseapp.com",
+    databaseURL: "https://rate-my-cat.firebaseio.com",
+    storageBucket: "rate-my-cat.appspot.com",
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="app.js"></script>
+</body>
+</html>
